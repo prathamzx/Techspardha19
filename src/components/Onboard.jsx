@@ -109,7 +109,7 @@ const Onboard = props => {
                 <option value='4th'>4th</option>
               </select>
             </div>
-            <button>send</button>
+            <button className='query-send'>send</button>
           </form>
         </div>
       </div>

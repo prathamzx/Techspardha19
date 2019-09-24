@@ -34,7 +34,7 @@ const Guest = props => {
     };
     getGuests();
   }, []);
-  
+
   const dguests = istate.guests ? (
     istate.guests.map((guest, index) => (
       <div className='guest-card' key={index}>
@@ -42,11 +42,12 @@ const Guest = props => {
           <img className='guest' src={guest.imageUrl}></img>
         </div>
         <p className='guest-name'>&lt;{guest.name}/&gt;</p>
-        <div className='guest-desc'>
+        <div className='guest-desc'><span className="guest-pointer">
           <p className='date'>
             {guest.date}, {guest.time}
           </p>
           <p>{guest.desc}</p>
+          </span>
         </div>
       </div>
     ))

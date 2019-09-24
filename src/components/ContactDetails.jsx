@@ -47,13 +47,15 @@ const ContactDetails = props => {
         <div key={index}>
           {/* <img className='contact-img' src={ppl.imageUrl} alt={ppl.name} /> */}
           <p>- {ppl.name}</p>
-          <p>[{ppl.phoneNo}]</p>
+          <p>&nbsp;&nbsp;{ppl.post}</p>
+          <p>&nbsp;&nbsp;[{ppl.phoneNo}]</p>
+          <br/>
         </div>
       ))
     ) : (
       <p>No contacts found</p>
     );
-
+    console.log(contactDetails);
   return (
     <>
       <Loading title='contact' />

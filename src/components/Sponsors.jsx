@@ -5,7 +5,8 @@ import axios from 'axios';
 import Context from '../contextStore/Context';
 import { Link } from 'react-router-dom';
 const Sponsors = props => {
-  // document.body.style.overflow = 'hidden';
+  document.body.scroll = 'yes';
+  document.body.style.overflow = 'auto';
   const { dispatch } = useContext(Context);
   const [istate, setState] = useState({
     sponsors: []
