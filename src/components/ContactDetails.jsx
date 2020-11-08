@@ -2,18 +2,16 @@ import React, { useEffect, useContext, useState } from 'react';
 import Context from '../contextStore/Context';
 import Loading from './Loading';
 import Back from './Back';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Contact = props => {
-  document.body.style.overflow = 'auto';
+const ContactDetails = props => {
+  // document.body.style.overflow = 'auto';
   const { dispatch } = useContext(Context);
   const [contactDetails, setContactDetails] = useState({
     contacts: []
   });
 
   useEffect(() => {
-    const abortController = new AbortController();
     const getContact = async () => {
       try {
         const res = await axios.get(
@@ -36,31 +34,38 @@ const Contact = props => {
       }
     };
     getContact();
-    return function cleanup() {
-      abortController.abort();
-    };
   }, []);
   if (contactDetails.contacts.length <= 0) return <p>fetching contacts..</p>;
-  // console.log(contactDetails);
+
+  const secContacts = contactDetails.contacts.filter(
+    cnt => props.match.params.section === cnt.section
+  );
+
+  const people =
+    secContacts[0].people.length > 0 ? (
+      secContacts[0].people.map((ppl, index) => (
+        <div key={index}>
+          {/* <img className='contact-img' src={ppl.imageUrl} alt={ppl.name} /> */}
+          <p>- {ppl.name}</p>
+          <p>&nbsp;&nbsp;{ppl.post}</p>
+          <p>&nbsp;&nbsp;[{ppl.phoneNo}]</p>
+          <br/>
+        </div>
+      ))
+    ) : (
+      <p>No contacts found</p>
+    );
+    console.log(contactDetails);
   return (
     <>
       <Loading title='contact' />
       <div className='c-container'>
         <Back history={props} />
-        <h1>/contact</h1>
-        <div className='contact-section'>
-          <ul>
-            {contactDetails &&
-              contactDetails.contacts.map((cnt, index) => (
-                <Link key={index} to={`/contact/${cnt.section}`}>
-                  <li className='cnt-item'>> {cnt.section}</li>
-                </Link>
-              ))}
-          </ul>
-        </div>
+        <h1>/{props.match.params.section}</h1>
+        <div>{people}</div>
       </div>
     </>
   );
 };
 
-export default Contact;
+export default ContactDetails;

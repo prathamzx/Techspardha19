@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+import config from '../config.json'
 export default function reducer(state, action) {
     const {
         type,
@@ -25,16 +27,23 @@ export default function reducer(state, action) {
                         return {
                             ...state,
                             token: null,
-                                isAuth: false
+                                isAuth: false,
+                                user: null
                         }
                         case 'USER_LOGIN_SUCCESS':
+                        case 'ONBOARDED':
                             localStorage.setItem('TPToken', payload.data.token);
+                            const user = jwt.verify(payload.data.token, config.TOKEY)
+                            console.log(user)
+                            console.log("here")
                             return {
                                 ...state,
                                 isAuth: payload.success,
                                     token: payload.data.token,
-                                    onBoard: payload.onBoard
+                                    onBoard: user.onBoard,
+                                    user
                             }
+
                             default:
                                 return state;
     }
